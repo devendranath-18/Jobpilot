@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
-    },
+  "dev": "tsx watch src/index.ts",
+  "build": "tsc && node -e \"require('fs').mkdirSync('dist/db', {recursive:true}); require('fs').copyFileSync('src/db/schema.sql', 'dist/db/schema.sql')\"",
+  "start": "node dist/index.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
