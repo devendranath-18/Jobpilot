@@ -40,9 +40,9 @@ export async function runAgent(
 }> {
   // Spawn the MCP server as a subprocess and connect to it over stdio
   const transport = new StdioClientTransport({
-    command: "npx",
-    args: ["tsx", "src/mcpServer.ts"],
-  });
+  command: "node",
+  args: ["dist/mcpServer.js"],
+});
 
   const client = new Client({ name: "jobpilot-agent", version: "1.0.0" });
   await client.connect(transport);
