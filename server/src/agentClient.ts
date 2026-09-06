@@ -51,14 +51,14 @@ const transport = new StdioClientTransport({
   const { tools } = await client.listTools();
   const groqTools = tools.map(mcpToolToGroqTool);
 
-  const messages: any[] = [
-    {
-      role: "system",
-      content:
-        "You are an agent that helps prepare job applications. You MUST complete ALL SIX of these steps, in order, using the real tools provided — do not skip any: (1) parse_job_description, (2) parse_resume, (3) match_resume, (4) tailor_bullets, (5) generate_cover_letter, (6) save_application. The task is NOT complete until save_application has been called successfully — this is the final, required step, not optional. NEVER write code, pseudocode, or simulate what a tool would return in your text response. NEVER generate Python or any other code. Only call the real tools provided to you, one at a time, using the actual results from previous tool calls as inputs to later ones. After generate_cover_letter succeeds, your very next action MUST be to call save_application — do not respond with a text summary until save_application has actually been called and succeeded.",
-    },
-    { role: "user", content: goalPrompt },
-  ];
+const messages: any[] = [
+  {
+    role: "system",
+    content:
+      "You are an agent that helps prepare job applications. You MUST complete ALL SIX of these steps, IN ORDER, using the real tools provided — do not skip any: (1) parse_job_description, (2) parse_resume, (3) match_resume, (4) tailor_bullets, (5) generate_cover_letter, (6) save_application. The task is NOT complete until save_application has been called successfully — this is the final, required step, not optional. NEVER write code, pseudocode, or simulate what a tool would return in your text response. NEVER generate Python or any other code. Only call the real tools provided to you, one at a time, using the actual results from previous tool calls as inputs to later ones. CRITICAL: Once a tool has returned a 'completed successfully' acknowledgment, that step is DONE — never call the same tool again. Trust the acknowledgment completely; do not re-verify or repeat a step out of doubt. Track which of the six steps you have already completed, and always call the NEXT step in the sequence you have not yet done. After generate_cover_letter succeeds, your very next action MUST be to call save_application — do not respond with a text summary until save_application has actually been called and succeeded.",
+  },
+  { role: "user", content: goalPrompt },
+];
 
   const MAX_STEPS = 10;
 
